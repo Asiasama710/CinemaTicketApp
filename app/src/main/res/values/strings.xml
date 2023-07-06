@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">CinemaTicket app</string>
+    <string name="_2h_45m">2h 45m</string>
+    <string name="_6_8_10">6.8/10</string>
+    <string name="imdb">IMDB</string>
+    <string name="_63">63%</string>
+    <string name="rotten_tomatoes">Rotten Tomatoes</string>
+    <string name="ign">IGN</string>
+    <string name="_4_10">4/10</string>
+    <string name="fantastic_beasts_the_secret_of_dumbledore">Fantastic Beasts :The Secret of Dumbledore</string>
+    <string name="action">Action</string>
+    <string name="descption_of_film">Professor Albus Dumbledore knows the powerful. dark wizard Gellert Grindelwald is moving to selze control of the wizarding world. Unable to stop him…</string>
+    <string name="booking">Booking</string>
+    <string name="now_showing">Now showing</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="_100_00">$100.00</string>
+    <string name="_4_tickets">4 tickets</string>
+    <string name="available">Available</string>
+    <string name="taken">Taken</string>
+    <string name="selected">Selected</string>
 </resources>
