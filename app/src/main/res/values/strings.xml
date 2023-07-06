@@ -18,4 +18,5 @@
     <string name="available">Available</string>
     <string name="taken">Taken</string>
     <string name="selected">Selected</string>
+    <string name="buy_tickets">Buy tickets</string>
 </resources>

@@ -14,11 +14,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,8 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.asiasama.cinematicketapp.R
-import com.asiasama.cinematicketapp.data.Ticket
 import com.asiasama.cinematicketapp.ui.composable.ButtonClose
 import com.asiasama.cinematicketapp.ui.composable.ButtonCustomise
 import com.asiasama.cinematicketapp.ui.composable.Chip
@@ -38,45 +38,27 @@ import com.asiasama.cinematicketapp.ui.composable.TicketState
 
 
 @Composable
-fun TicketScreen() {
-    //   val state by viewModel.state.collectAsState()
+fun TicketScreen(
+    viewModel: TicketViewModel = hiltViewModel(),
+) {
+    val state by viewModel.state.collectAsState()
 
-//    TicketContent(
-//        state = state,
-//        onSelectTime = viewModel::onClickShowTime,
-//        onSelectDate = viewModel::onClickDay
-//    )
+    TicketContent(
+        state = state,
+        onSelectTime = viewModel::onClickShowTime,
+        onSelectDate = viewModel::onClickDay
+    )
 
 }
 
 
 @Preview(showSystemUi = true)
 @Composable
-fun TicketContent(
+private fun TicketContent(
     state: TicketUiState = TicketUiState(),
     onSelectTime: (String) -> Unit = {},
     onSelectDate: (String) -> Unit = {},
 ) {
-    val showTime: List<String> =
-        listOf(
-            "10:00",
-            "11:00",
-            "12:00",
-            "13:00",
-            "14:00",
-            "15:00",
-        )
-    val ticketsDay = listOf(
-        Ticket("Mon", "12"),
-        Ticket("Tue", "13"),
-        Ticket("Wed", "14"),
-        Ticket("Thu", "15"),
-        Ticket("Fri", "16"),
-        Ticket("Sat", "17"),
-        Ticket("Sun", "18"),
-        Ticket("Sun", "18"),
-        Ticket("Sun", "18"),
-    )
 
 
     Column(
@@ -85,7 +67,7 @@ fun TicketContent(
             .fillMaxSize()
             .padding(top = 16.dp),
 
-    ) {
+        ) {
         ButtonClose(modifier = Modifier.padding(start = 16.dp))
         ImageTicket(
             color = MaterialTheme.colorScheme.background,
@@ -101,8 +83,14 @@ fun TicketContent(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             TicketState(state = stringResource(R.string.available), color = Color.White)
-            TicketState(state = stringResource(R.string.taken), color = MaterialTheme.colorScheme.tertiary)
-            TicketState(state = stringResource(R.string.selected), color = MaterialTheme.colorScheme.primary)
+            TicketState(
+                state = stringResource(R.string.taken),
+                color = MaterialTheme.colorScheme.tertiary
+            )
+            TicketState(
+                state = stringResource(R.string.selected),
+                color = MaterialTheme.colorScheme.primary
+            )
         }
         Box(
             modifier = Modifier
@@ -123,9 +111,9 @@ fun TicketContent(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    items(ticketsDay) { ticket ->
+                    items(state.day) { ticket ->
                         DateChip(
-                            isSelected = ticket == ticketsDay[3],
+                            isSelected = ticket == state.day[3],
                             onClick = { /*TODO*/ },
                             ticketsDay = ticket
                         )
@@ -139,7 +127,7 @@ fun TicketContent(
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    itemsIndexed(showTime) { position,time ->
+                    itemsIndexed(state.showTime) { position, time ->
                         Chip(
                             text = time,
                             isSelected = position == 0,
@@ -172,7 +160,7 @@ fun TicketContent(
                     }
                     ButtonCustomise(
                         onClick = {},
-                        text = "Buy tickets",
+                        text = stringResource(R.string.buy_tickets),
                         icon = R.drawable.ic_bookinng
                     )
 

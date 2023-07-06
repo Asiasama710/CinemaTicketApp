@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.asiasama.cinematicketapp.R
 import com.asiasama.cinematicketapp.ui.composable.ButtonClose
 import com.asiasama.cinematicketapp.ui.composable.ButtonCustomise
@@ -36,9 +39,22 @@ import com.asiasama.cinematicketapp.ui.composable.LabelTime
 import com.asiasama.cinematicketapp.ui.composable.TextLabel
 import com.asiasama.cinematicketapp.ui.composable.Title
 
+
 @Preview(showSystemUi = true)
 @Composable
-fun DetailsContent() {
+fun MoveDetailsScreen(
+    viewModel: MoveDetailsViewModel = hiltViewModel(),
+) {
+    val state by viewModel.state.collectAsState()
+
+    DetailsContent(state = state)
+
+}
+
+@Composable
+private fun DetailsContent(
+    state: MoveDetailsUiState ,
+) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -110,19 +126,6 @@ fun DetailsContent() {
                     Chip(text = stringResource(R.string.action))
                 }
 
-                val actor = listOf(
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                    R.drawable.film_cover,
-                )
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -133,7 +136,7 @@ fun DetailsContent() {
 
                 ) {
 
-                    items(actor) {
+                    items(state.actor) {
                         CircleImage(painter = painterResource(id = it))
                     }
                 }

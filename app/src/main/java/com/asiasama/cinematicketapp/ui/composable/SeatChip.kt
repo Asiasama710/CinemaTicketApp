@@ -84,5 +84,4 @@ fun SeatState(
         modifier = modifier.size(90.dp)
             .clickable { onChecked() },
     )
-
 }

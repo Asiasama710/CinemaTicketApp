@@ -67,7 +67,6 @@ fun MovePager(
             modifier = Modifier
                 .width(220.dp)
                 .graphicsLayer {
-                      alpha = 0.8f + (1f - pageOffset.coerceIn(0f, 1f)) * 0.8f
                     scaleX = imageSize
                     scaleY = imageSize
 
